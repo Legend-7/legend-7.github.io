@@ -151,7 +151,9 @@ const projectData = {
     title: 'Merlin\'s Chance',
     text: 'Merlin\'s Chance is a no-loss raffle that operates across multiple blockchains, offering participants a unique opportunity to win rewards without risking their initial investment. The platform funnels participants’ contributions into lending protocols, where the interest generated forms the prize pool. I was responsible for the complete design and development of both the backend and frontend, as well as the creation of the smart contracts that power the raffle system.',
     images: [
-        '/images/merlins_chance.png',
+      '/images/merlins_chance.png',
+      '/images/merlin/1.jpg',
+      '/images/merlin/2.jpg',
     ],
     bullets: [
         'No-Loss Raffle: Merlin\'s Chance allows users to participate in a raffle without any risk of losing their initial investment, as funds are safely invested into lending protocols.',
