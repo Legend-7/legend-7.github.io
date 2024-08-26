@@ -452,11 +452,12 @@ function showCodeBoxes() {
       cssBox.style.opacity = 1;
       typeCode(document.getElementById('css-code'), cssCode, () => {
           cssBox.innerHTML += `<style>${cssCode}</style>`;
-          jsBox.style.opacity = 1;
-          typeCode(document.getElementById('js-code'), jsCode, () => {
-              eval(jsCode);
-          });
       });
+      jsBox.style.opacity = 1;
+      typeCode(document.getElementById('js-code'), jsCode, () => {
+          eval(jsCode);
+      });
+
   });
 }
 
