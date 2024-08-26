@@ -1,0 +1,745 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legend | Full-Stack Developer</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+    <div id="chatWidget">
+
+        <style>
+
+            .chat-widget {
+                position: fixed;
+                right: 20px;
+                bottom: -200px;
+                width: 300px;
+                /* background: #fff;
+                border: 1px solid #ccc; */
+                border-radius: 8px;
+                z-index: 1000;
+                transition: 1s;
+            }
+            /* Optional class for visibility */
+            .chat-widget.visible {
+                bottom: 20px; /* End position */
+                transition: 1s;
+            }
+            .chat-widget ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .chat-header {
+                background: transparent;
+                color: #fff;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row-reverse;
+
+            }
+        
+            .chat-header h4 {
+                margin: 0;
+                font-size: 16px;
+            }
+        
+            .chat-content {
+                display: none;
+                padding: 10px;
+                max-height: 800px;
+                overflow-y: auto;
+                background: #fff;
+                border: 1px solid #ccc;
+                border-radius: 0px 0px 8px 8px;
+
+            }
+        
+            .chat-messages {
+                margin: 10px 0;
+            }
+        
+            .chat-input {
+                display: flex !important;
+                margin-top: 10px;
+                height: 50px;
+            }
+        
+            .chat-input input {
+                flex: 1;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        
+            .chat-input button {
+                text-align: center;
+                height: 50px;
+            }
+        
+            #characterInfo {
+                display: none;
+            }
+            .profile-image {
+                border: 1px solid white;
+                width: 50px;
+                height: 50px;
+                position: relative;
+                flex: none;
+                margin-left: 20px;
+            }
+            .profile-image {
+                border-radius: 50%;
+                overflow: hidden;
+                /* position: absolute; */
+                bottom: -20px;
+                left: 0px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+            }
+            .profile-image img {
+                width: 100%;
+                height: auto;
+                
+            }
+            .warning-text {
+                color: grey;
+                text-align: center;
+            }
+            .messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    display: flex;
+    max-width: 80%;
+    margin:10px;
+}
+
+.message.sent {
+    align-self: flex-end;
+}
+
+.message.received {
+    align-self: flex-start;
+}
+
+.message-content {
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.message.sent .message-content {
+    background-color: var(--metallic-bronze);
+    color: white;
+}
+
+.message.received .message-content {
+    background-color: #e5e5ea;
+    color: black;
+}
+.chat-input {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.chat-input textarea {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+}
+.chat-input button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: var(--metallic-bronze);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: var(--metallic-gold);
+    transition: 0.3s;
+}
+.chat-header {
+    background-image: linear-gradient(315deg, transparent 0%, transparent 74%);
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.chat-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fffa4e;
+    text-shadow: 2px 2px #ff8100;
+
+}
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.chat-messages {
+    display: contents;
+}
+
+
+
+/*  */
+
+
+    .category {
+      margin-bottom: 20px;
+      height: 40px;
+      min-width: 100px;
+    }
+    .category {
+        outline: 1px solid var(--metallic-bronze) !important;
+        background: transparent;
+        border-style: none;
+        border-radius: 10px;
+        
+    }
+    .category:hover {
+        outline: 1px solid var(--metallic-gold) !important;
+
+    }
+    .category:hover h3, .active h3{
+        color: white !important;
+        
+    }
+    .category h3 {
+        color: grey;
+      /* background-color: #f0f0f0; */
+      font-size: 1.1em;  
+      margin: 0;
+    }
+    .active {
+        background: linear-gradient(315deg, var(--metallic-bronze) 0%, var(--metallic-gold) 74%) !important;
+    }
+    .post {
+        position: relative;
+        background-color: transparent;
+        min-height: 200px;
+        height: 200px;
+        width: 100%;
+        max-width: 300px;
+        margin: 2px;
+        overflow-x: hidden;
+        background-size: cover;
+        background-position: center;
+        border-radius: 1rem;
+        opacity: 0.9;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0);
+        outline: 1px solid #313131;
+        text-align: center;
+        transition: 0.3s;
+    }
+    .post:hover {
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+    .post img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(/images/image.png) no-repeat center center;
+        object-fit: cover;
+        z-index: 1;
+
+    }
+    .post h3 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        padding: 10px 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        text-align: center;
+        z-index: 2;
+    }
+    .postLink {
+      color: white;
+    }
+    .postLink:hover {
+        text-decoration-line: underline;
+        cursor: pointer;
+    }
+    .filters {
+      margin-bottom: 20px;
+    }
+    .filters button {
+      margin-right: 10px;
+    }
+     /* Lightbox styles */
+     .lightbox {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 60px);
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox-content {
+        background: var(--dark-bg);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      width: 100%;
+      height: inherit;
+    }
+    .lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-bottom: 1px solid var(--gold);
+
+    }
+    .lightbox-header h2 {
+      margin: 0;
+    }
+    .lightbox-close {
+      cursor: pointer;
+      font-size: 24px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-50px); }
+      to { transform: translateY(0); }
+    }
+    .fade-in {
+        animation: fadeIn 0.5s forwards, slideIn 0.5s forwards; /* Adjust the duration as needed */
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    @keyframes slideOut {
+        from { transform: translateY(0); }
+        to { transform: translateY(-50px); }
+    }
+
+    .fade-out {
+        animation: fadeOut 0.5s forwards, slideOut 0.5s forwards; /* Adjust the duration as needed */
+    }
+
+
+    #lightbox-content {
+        overflow-y: auto;
+        padding-left: 10px;
+      padding-right: 10px;
+      height: inherit;
+
+    }
+
+    #category-container {
+        gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    }
+    #posts-container {
+        display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    justify-items: center;
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+    }
+
+    .flex-to-block {
+        display: flex;
+        align-content: center;
+    }
+    .half {
+        text-align: center;
+    padding: 10px;
+    width: 50%;
+    margin: 10px;
+    display: block;
+    }
+    .msg_card {
+        min-width: 30vw;
+
+    }
+    @media (max-width: 1000px) {
+        .chat-widget {
+            width: calc(100% - 40px);
+        }
+        .flex-to-block {
+        display: block;
+        align-content: center;
+    }
+    .msg_card {
+        min-width: 90vw;
+        
+    }
+
+    .half {
+        width: auto;
+    }
+
+        #posts-container {
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap;
+        }
+    }
+
+        </style>
+        
+        <div class="chat-widget">
+            <div class="chat-header" id="chat-header">
+                <div class="profile-image">
+                    <img id="profile-image" src="./images/mage_square.jpg" alt="Profile Picture">
+                </div>   
+                <div class="received message"><div class="message-content">Hey there! Need some help? Ask me anything!</div></div>         
+            </div>
+            <div class="chat-content">
+
+                <div id="chatMessagesContainer" style="display: flex; flex-direction: column; max-height: 60vh; overflow-y: auto;">
+                    <div id="chatMessages" class="chat-messages"></div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Type a message...">
+                    <button id="sendMessageBtn">Send</button>
+                </div>
+            </div>
+        </div>
+        <script src="./widget.js"></script>
+        
+
+    </div>
+
+
+    <section class="hero">
+        <div class="particle-container">
+            <!-- Add particles dynamically with JavaScript or use server-side rendering if needed -->
+        </div>
+
+        <div class="content">
+            <h1>Elevate Your Digital Presence</h1>
+            <p>Craft powerful, scalable solutions that go beyond simple websites. Whether it's a robust application, a complex integration, or a cutting-edge technology stack, let's bring your vision to life 🔥 </p>
+          <button onclick="scrollToSection('services')" class="blue">See Services</button>
+          <button onclick="scrollToSection('contact')" class="orange">Hire Me</button>
+        </div>
+        
+        <div class="mockup">
+            <div class="screen">
+                <div class="header">Your Inspiring Header</div>
+                <div class="scroll-container">
+                    <h1 class="title">Empower Your Vision</h1>
+                    
+                    <div class="flex">
+                        <div class="card card1">
+                            <div class="card-image"></div>
+                            <div class="card-content">Innovate and Create</div>
+                        </div>
+                        <div class="card card2">
+                            <div class="card-image"></div>
+                            <div class="card-content">Explore New Horizons</div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-box">
+                        <p>Welcome to a space where your ideas take flight. Whether you're crafting the next big thing or diving into uncharted territories, this platform is designed to inspire, support, and elevate your creative journey.</p>
+                    </div>
+        
+                    <div class="flex">
+                        <div class="card card3">
+                            <div class="card-image"></div>
+                            <div class="card-content">Design with Impact</div>
+                        </div>
+                        <div class="card card4">
+                            <div class="card-image"></div>
+                            <div class="card-content">Collaborate with Passion</div>
+                        </div>
+                        <div class="card card5">
+                            <div class="card-image"></div>
+                            <div class="card-content">Achieve Your Goals</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                   
+    </section>
+  
+<!--  Example Projects  -->
+<div class="banner" id="services">
+    <div class="tiles-container">
+        <div class="tile" id="web-development" style="background-image: url('/images/web-UI.jpg');" onclick="showInfo('web-development')">
+            Web Development
+        </div>
+        <div class="tile" id="electron-apps" style="background-image: url('/images/app-UI.jpg');" onclick="showInfo('electron-apps')">
+            Desktop Apps
+        </div>
+        <div class="tile" id="blockchain-development" style="background-image: url('/images/sol.jpg');" onclick="showInfo('blockchain-development')">
+            Blockchain Development
+        </div>
+        <div class="tile" id="javascript-games" style="background-image: url('/images/broc_animator.jpg');" onclick="showInfo('javascript-games')">
+            JavaScript Games
+        </div>
+        <div class="tile" id="api-integration" style="background-image: url('/images/programming.jpg');" onclick="showInfo('api-integration')">
+            API Integration
+        </div>
+        <div class="tile" id="smart-contracts" style="background-image: url('/images/sol.jpg');" onclick="showInfo('smart-contracts')">
+            Smart Contracts
+        </div>
+        <div class="tile" id="chatbots" style="background-image: url('/images/bot.png');" onclick="showInfo('chatbots')">
+            Chatbots
+        </div>
+        <!-- Duplicate so it fills screen for scrolling -->
+        <div class="tile" id="web-development" style="background-image: url('/images/web-UI.jpg');" onclick="showInfo('web-development')">
+            Web Development
+        </div>
+        <div class="tile" id="electron-apps" style="background-image: url('/images/app-UI.jpg');" onclick="showInfo('electron-apps')">
+            Electron Apps
+        </div>
+        <div class="tile" id="blockchain-development" style="background-image: url('/images/sol.jpg');" onclick="showInfo('blockchain-development')">
+            Blockchain Development
+        </div>
+        <div class="tile" id="javascript-games" style="background-image: url('/images/broc_animator.jpg');" onclick="showInfo('javascript-games')">
+            JavaScript Games
+        </div>
+        <div class="tile" id="api-integration" style="background-image: url('/images/programming.jpg');" onclick="showInfo('api-integration')">
+            API Integration
+        </div>
+        <div class="tile" id="smart-contracts" style="background-image: url('/images/sol.jpg');" onclick="showInfo('smart-contracts')">
+            Smart Contracts
+        </div>
+        <div class="tile" id="chatbots" style="background-image: url('/images/bot.png');" onclick="showInfo('chatbots')">
+            Chatbots
+        </div>
+    </div>
+    <div class="details-section">
+        <div id="details-content">
+            <!-- Detailed information will be injected here by JavaScript -->
+        </div>
+    </div>
+</div>
+ <!-- Second Hero Section -->
+    <div class="hero secondary-hero">
+
+        <div style="display:flex; padding:25px; z-index: 2;">
+            
+  
+<div id="animation-container">
+    <img id="ufo" src="/images/UFO.png" alt="UFO">
+    <div id="tractor-beam"></div>
+    <img id="cow" src="/images/cow.png" alt="Cow">
+</div>
+
+<div id="code-boxes">
+    <div class="code-box" id="html-box">HTML
+        <pre><code id="html-code"></code></pre>
+    </div>
+    <div class="code-box" id="css-box">CSS
+        <pre><code id="css-code"></code></pre>
+    </div>
+    <div class="code-box" id="js-box">JS
+        <pre><code id="js-code"></code></pre>
+    </div>
+</div>
+
+        </div>
+
+        <div class="content">
+            <h1>Expert Programming for Ambitious Projects</h1>
+            <p>With a deep understanding of JavaScript, Node.js, and modern web technologies, I turn challenging concepts into functional, high-performing solutions. Let’s build something out of this world together!</p>
+        </div>
+  </div>
+  
+  <!-- Third Hero Section -->
+    <div class="hero third-hero">
+
+
+
+        <div class="content">
+            <h1>Projects</h1>
+            <p>Exploring innovation and creativity through code, design, and collaboration.</p>
+        </div>
+      
+        <div class="logo-container">
+            <div class="logo">
+                <img src="/images/fae_logo.png" alt="Fae_Frameworks" onclick="openPopup('fae')">
+
+            </div>
+            <div class="logo">
+                <img src="/images/eldermine.png" alt="Eldermine" onclick="openPopup('eldermine')">
+
+            </div>
+            <div class="logo">
+                <img src="/images/crouton_jones.png" alt="crouton_jones" onclick="openPopup('crouton')">
+
+            </div>
+            <div class="logo">
+                <img src="/images/merlins_chance.png" alt="Merlins_chance" onclick="openPopup('merlins')">
+
+            </div>
+            <div class="logo">
+                <img src="/images/xnxi.png" alt="xenix_chain" onclick="openPopup('xenix')">
+
+            </div>
+            <div>
+
+            </div>
+            <!-- Add more logos as needed -->
+        </div>
+    
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <div style="display: flex; align-items: center; gap: 10px">
+                    <div alt="Logo" id="popup-logo"></div>
+
+                    <h1 id="popup-title">Project Title</h1>
+                </div>
+                <h3>About</h3>
+                <p id="popup-text">Supporting text about the project goes here.</p>
+                <div id="popup-images" class="popup-images">
+                    <!-- Images will be added dynamically -->
+                </div>
+                <h3>What I worked on</h3>
+                <ul id="popup-bullets">
+                    <!-- Bullet points will be added dynamically -->
+                </ul>
+            </div>
+        </div>
+    
+        <div class="fullscreen-container">
+            <img src="" alt="Fullscreen View" id="fullscreen-image">
+          </div>
+  </div>
+  
+   <section id="timeline-section" class="secondary-hero">
+   <h1 style="text-align: center;">Process / Timeline</h1>
+          <p style="text-align: center;">Clear steps to bring your vision to life, from concept to completion.</p>
+     <hr>
+        <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-item">
+                <p class="title">Discovery Phase</p>
+                <p class="description">In this initial phase, we explore your project requirements, goals, and objectives to understand what you need and how we can achieve it together.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Project Proposal</p>
+                <p class="description">We present a detailed proposal outlining the scope, timeline, and cost of the project based on our discovery phase discussions.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Agreement & Contract</p>
+                <p class="description">Formalize our partnership with a contract that details the agreed-upon terms, deliverables, and payment schedule.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Research & Planning</p>
+                <p class="description">Conduct in-depth research and create a strategic plan to guide the development process, ensuring all requirements are met.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Wireframing</p>
+                <p class="description">Develop wireframes to map out the structure and layout of the website or app, providing a visual guide for the design phase.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Design Mockups</p>
+                <p class="description">Create detailed design mockups based on the wireframes, showing how the final product will look and function.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Client Review</p>
+                <p class="description">Present the design mockups to you for feedback and revisions, ensuring the design meets your expectations before proceeding.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Development</p>
+                <p class="description">Begin the development phase, coding and building the website or app according to the approved design and functionality.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Content Integration</p>
+                <p class="description">Add and format content into the website or app, including text, images, and multimedia elements.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Testing & QA</p>
+                <p class="description">Conduct thorough testing and quality assurance to identify and fix any issues before launch.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Client Feedback & Revisions</p>
+                <p class="description">Gather your feedback and make any necessary revisions to ensure the final product meets your needs.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Launch Preparation</p>
+                <p class="description">Prepare for the official launch by finalizing all details and ensuring everything is ready for public release.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Project Launch</p>
+                <p class="description">Officially launch the website or app, making it available to users and clients.</p>
+            </div>
+            <div class="timeline-item">
+                <p class="title">Post-Launch Support</p>
+                <p class="description">Provide ongoing support and maintenance to address any post-launch issues and ensure continued success.</p>
+            </div>
+        </div>
+    </section>
+  
+  <section class="hero" id="contact">
+          <div class="content">
+            <h1>Contact</h1>
+            <p>Let's discuss your project, ideas, or just say hello.</p>
+        </div>
+      
+        <div class="contact-form">
+        <form action="#" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    
+  </section>
+</body>
+<script src="script.js"></script>
+
+</html>
