@@ -133,8 +133,11 @@ const projectData = {
     title: 'Crouton Jones',
     text: 'An adult animated TV show featuring over 40 unique characters, each with their own personality and charm. The show is integrated into the blockchain, offering a variety of innovative features including a custom token, an animation tool, a bespoke website, character-specific chatbots, and a task manager with DAO-like functionality. While I focused primarily on the backend development, the design was a collaborative effort with another talented designer.',
     images: [
-        '/images/crouton_jones.png',
-        '/images/crouton/broc_animator.jpg',
+      '/images/crouton_jones.png',
+      '/images/crouton/site1.jpg',
+      '/images/crouton/site2.jpg',
+      '/images/crouton/site3.jpg',
+      '/images/crouton/broc_animator.jpg',
         '/images/crouton/animator-screenshot1.jpg',
     ],
     bullets: [
@@ -549,3 +552,66 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 });
+
+
+
+
+
+
+// Contact form
+
+document.getElementById('contactForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const messageSenderName = document.getElementById('name').value;
+  const messageSenderEmail = document.getElementById('email').value;
+  const messageContent = document.getElementById('message').value;
+  const workspaceID = `66e7857e8ee9f8003e9be52e`;
+
+  const content = `{ name: ${messageSenderName}, email: ${messageSenderEmail}, message: ${messageContent} }`
+
+  try {
+    const response = await fetch('https://fae-official.onrender.com/api/alerts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content: content, workspace: workspaceID }),
+      mode: 'cors'
+    });
+    
+    if (response.ok) {
+      //alert('Message saved successfully!');
+      showNotification('Message sent successfully!', 'green')
+
+      // Clear the input fields
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('message').value = '';
+
+    } else {
+      // alert('Failed to save message.');
+      showNotification('Message failed! Please try again.', 'red')
+
+    }
+  } catch (error) {
+    //alert('Error: ' + error.message);
+    showNotification('Message failed! Please try again.', 'red')
+
+  }
+});
+function showNotification(message, color = 'green') {
+  // Create a new notification element
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+  notification.style.backgroundColor = color;
+
+  // Add the notification to the container
+  const container = document.getElementById('notification-container');
+  container.appendChild(notification);
+
+  // Automatically remove the notification after 3 seconds (to match the animation)
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}

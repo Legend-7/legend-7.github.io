@@ -20,7 +20,29 @@ body {
     overflow-x: hidden;
   overflow-y: auto; /* Hide scrollbars for a smoother experience */
 }
+.sheen-text {
+  font-size: 48px;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background: linear-gradient(90deg, #dfdfdf, #dfdfdf 50%, rgb(255 255 255), #dfdfdf 100%);
+  background-size: 200% 100%;
+  background-position: -100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 3s linear infinite;
+}
 
+@keyframes sheen {
+  0% {
+      background-position: -100%;
+  }
+  100% {
+      background-position: 100%;
+  }
+}
 .hero {
   display: flex;
   justify-content: space-between;
@@ -424,6 +446,18 @@ padding-top: 25px;
 
 #popup-bullets li {
   margin: 10px 0;
+  background: var(--dark-bg);
+  padding: 10px;
+  border-radius: 8px;
+  list-style: none;
+  transform: scale(1);
+  transition: 0.3s;
+
+}
+#popup-bullets li:hover {
+  background: var(--metallic-gold);
+  transform: scale(1.03);
+  transition: 0.3s;
 }
 #popup-logo img{
   width: 75px;
@@ -709,9 +743,73 @@ background: #555;
 
 }
 
+#notification-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none; /* Allows interaction with elements beneath */
+  display: flex;
+  flex-direction: column;
+}
+
+.notification {
+  background-color: green;
+  color: white;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  pointer-events: auto; /* Allows interaction with the notification */
+  animation: slide-in 0.5s ease, slide-out 0.5s ease 2.5s; /* Adjust timing as needed */
+}
+
+/* Slide-in animation */
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-out animation */
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
 
 
 /* contact */
+.social-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  align-items: center;
+  margin: 20px;
+}
+
+.social-icons a {
+  color: white; /* Change to desired color */
+  font-size: 32px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: var(--metallic-gold); 
+}
 .contact-form {
   padding: 40px;
   width: 50%;
