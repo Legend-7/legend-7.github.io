@@ -1,756 +1,699 @@
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legend | Full-Stack Developer</title>
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-     <!-- Include Font Awesome CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legend | Full-Stack Developer & Digital Architect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Legend — Full-Stack Developer &amp; Digital Architect. Web apps, blockchain platforms, smart contracts, JavaScript games &amp; AI chatbots. Available for freelance.">
+  <meta property="og:title" content="Legend | Full-Stack Developer &amp; Digital Architect">
+  <meta property="og:description" content="Building next-generation web apps, blockchain platforms, and immersive game experiences. JavaScript, Node.js, React, Solidity, Web3.">
+  <meta property="og:image" content="https://legend-7.github.io/images/legend-mage-hero.png">
+  <meta property="og:image:alt" content="Legend, an arcane digital architect, against a cosmic background">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://legend-7.github.io/images/legend-mage-hero.png">
+  <meta name="theme-color" content="#7c3aed">
 </head>
 <body>
 
-    <div id="chatWidget">
+  <canvas id="space-particles" aria-hidden="true"></canvas>
 
-        <style>
-
-            .chat-widget {
-                position: fixed;
-                right: 20px;
-                bottom: -200px;
-                width: 300px;
-                /* background: #fff;
-                border: 1px solid #ccc; */
-                border-radius: 8px;
-                z-index: 1000;
-                transition: 1s;
-            }
-            /* Optional class for visibility */
-            .chat-widget.visible {
-                bottom: 20px; /* End position */
-                transition: 1s;
-            }
-            .chat-widget ::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            .chat-header {
-                background: transparent;
-                color: #fff;
-                cursor: pointer;
-                display: flex;
-                flex-direction: row-reverse;
-
-            }
-        
-            .chat-header h4 {
-                margin: 0;
-                font-size: 16px;
-            }
-        
-            .chat-content {
-                display: none;
-                padding: 10px;
-                max-height: 800px;
-                overflow-y: auto;
-                background: #fff;
-                border: 1px solid #ccc;
-                border-radius: 0px 0px 8px 8px;
-
-            }
-        
-            .chat-messages {
-                margin: 10px 0;
-            }
-        
-            .chat-input {
-                display: flex !important;
-                margin-top: 10px;
-                height: 50px;
-            }
-        
-            .chat-input input {
-                flex: 1;
-                padding: 5px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-        
-            .chat-input button {
-                text-align: center;
-                height: 50px;
-            }
-        
-            #characterInfo {
-                display: none;
-            }
-            .profile-image {
-                border: 1px solid white;
-                width: 50px;
-                height: 50px;
-                position: relative;
-                flex: none;
-                margin-left: 20px;
-            }
-            .profile-image {
-                border-radius: 50%;
-                overflow: hidden;
-                /* position: absolute; */
-                bottom: -20px;
-                left: 0px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-            }
-            .profile-image img {
-                width: 100%;
-                height: auto;
-                
-            }
-            .warning-text {
-                color: grey;
-                text-align: center;
-            }
-            .messages {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.message {
-    display: flex;
-    max-width: 80%;
-    margin:10px;
-}
-
-.message.sent {
-    align-self: flex-end;
-}
-
-.message.received {
-    align-self: flex-start;
-}
-
-.message-content {
-    padding: 10px 15px;
-    border-radius: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.message.sent .message-content {
-    background-color: var(--metallic-bronze);
-    color: white;
-}
-
-.message.received .message-content {
-    background-color: #e5e5ea;
-    color: black;
-}
-.chat-input {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.chat-input textarea {
-    flex: 1;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    resize: none;
-}
-.chat-input button {
-    padding: 10px 20px;
-    margin-left: 10px;
-    cursor: pointer;
-    background-color: var(--metallic-bronze);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.chat-input button:hover {
-    background-color: var(--metallic-gold);
-    transition: 0.3s;
-}
-.chat-header {
-    background-image: linear-gradient(315deg, transparent 0%, transparent 74%);
-    color: #fff;
-    padding: 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-.chat-header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #fffa4e;
-    text-shadow: 2px 2px #ff8100;
-
-}
-.chat-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-.chat-messages {
-    display: contents;
-}
-
-
-
-/*  */
-
-
-    .category {
-      margin-bottom: 20px;
-      height: 40px;
-      min-width: 100px;
-    }
-    .category {
-        outline: 1px solid var(--metallic-bronze) !important;
-        background: transparent;
-        border-style: none;
-        border-radius: 10px;
-        
-    }
-    .category:hover {
-        outline: 1px solid var(--metallic-gold) !important;
-
-    }
-    .category:hover h3, .active h3{
-        color: white !important;
-        
-    }
-    .category h3 {
-        color: grey;
-      /* background-color: #f0f0f0; */
-      font-size: 1.1em;  
-      margin: 0;
-    }
-    .active {
-        background: linear-gradient(315deg, var(--metallic-bronze) 0%, var(--metallic-gold) 74%) !important;
-    }
-    .post {
-        position: relative;
-        background-color: transparent;
-        min-height: 200px;
-        height: 200px;
-        width: 100%;
-        max-width: 300px;
-        margin: 2px;
-        overflow-x: hidden;
-        background-size: cover;
-        background-position: center;
-        border-radius: 1rem;
-        opacity: 0.9;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0);
-        outline: 1px solid #313131;
-        text-align: center;
-        transition: 0.3s;
-    }
-    .post:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-    .post img{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url(/images/image.png) no-repeat center center;
-        object-fit: cover;
-        z-index: 1;
-
-    }
-    .post h3 {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        margin: 0;
-        padding: 10px 0;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        text-align: center;
-        z-index: 2;
-    }
-    .postLink {
-      color: white;
-    }
-    .postLink:hover {
-        text-decoration-line: underline;
-        cursor: pointer;
-    }
-    .filters {
-      margin-bottom: 20px;
-    }
-    .filters button {
-      margin-right: 10px;
-    }
-     /* Lightbox styles */
-     .lightbox {
-      display: none;
-      position: fixed;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: calc(100% - 60px);
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .lightbox-content {
-        background: var(--dark-bg);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 800px;
-      width: 100%;
-      height: inherit;
-    }
-    .lightbox-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-left: 10px;
-      padding-right: 10px;
-      border-bottom: 1px solid var(--gold);
-
-    }
-    .lightbox-header h2 {
-      margin: 0;
-    }
-    .lightbox-close {
-      cursor: pointer;
-      font-size: 24px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes slideIn {
-      from { transform: translateY(-50px); }
-      to { transform: translateY(0); }
-    }
-    .fade-in {
-        animation: fadeIn 0.5s forwards, slideIn 0.5s forwards; /* Adjust the duration as needed */
-    }
-
-    @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-    }
-
-    @keyframes slideOut {
-        from { transform: translateY(0); }
-        to { transform: translateY(-50px); }
-    }
-
-    .fade-out {
-        animation: fadeOut 0.5s forwards, slideOut 0.5s forwards; /* Adjust the duration as needed */
-    }
-
-
-    #lightbox-content {
-        overflow-y: auto;
-        padding-left: 10px;
-      padding-right: 10px;
-      height: inherit;
-
-    }
-
-    #category-container {
-        gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    }
-    #posts-container {
-        display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    justify-items: center;
-    width: 100%;
-    padding: 50px;
-    text-align: center;
-    }
-
-    .flex-to-block {
-        display: flex;
-        align-content: center;
-    }
-    .half {
-        text-align: center;
-    padding: 10px;
-    width: 50%;
-    margin: 10px;
-    display: block;
-    }
-    .msg_card {
-        min-width: 30vw;
-
-    }
-    @media (max-width: 1000px) {
-        .chat-widget {
-            width: calc(100% - 40px);
-        }
-        .flex-to-block {
-        display: block;
-        align-content: center;
-    }
-    .msg_card {
-        min-width: 90vw;
-        
-    }
-
-    .half {
-        width: auto;
-    }
-
-        #posts-container {
-        display: flex;
-        justify-content: center;
-        flex-flow: wrap;
-        }
-    }
-
-        </style>
-        
-        <div class="chat-widget">
-            <div class="chat-header" id="chat-header">
-                <div class="profile-image">
-                    <img id="profile-image" src="./images/mage_square.jpg" alt="Profile Picture">
-                </div>   
-                <div class="received message"><div class="message-content">Hey there! Need some help? Ask me anything!</div></div>         
-            </div>
-            <div class="chat-content">
-
-                <div id="chatMessagesContainer" style="display: flex; flex-direction: column; max-height: 60vh; overflow-y: auto;">
-                    <div id="chatMessages" class="chat-messages"></div>
-                </div>
-                <div class="chat-input">
-                    <input type="text" id="messageInput" placeholder="Type a message...">
-                    <button id="sendMessageBtn">Send</button>
-                </div>
-            </div>
-        </div>
-        <script src="./widget.js"></script>
-        
-
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-inner">
+      <span class="loader-label">LEGEND.DEV</span>
+      <div class="loader-track"><div class="loader-fill"></div></div>
+      <span class="loader-pct" id="loader-pct">0%</span>
     </div>
-
-
-    <section class="hero">
-        <div class="particle-container">
-            <!-- Add particles dynamically with JavaScript or use server-side rendering if needed -->
-        </div>
-
-        <div class="content">
-            <h1 class="sheen-text">Elevate Your Digital Presence</h1>
-            <p>Craft powerful, scalable solutions that go beyond simple websites. Whether it's a robust application, a complex integration, or a cutting-edge technology stack, let's bring your vision to life 🔥 </p>
-          <button onclick="scrollToSection('services')" class="blue">See Services</button>
-          <button onclick="scrollToSection('contact')" class="orange">Hire Me</button>
-        </div>
-        
-        <div class="mockup">
-            <div class="screen">
-                <div class="header">Your Inspiring Header</div>
-                <div class="scroll-container">
-                    <h1 class="title">Empower Your Vision</h1>
-                    
-                    <div class="flex">
-                        <div class="card card1">
-                            <div class="card-image"></div>
-                            <div class="card-content">Innovate and Create</div>
-                        </div>
-                        <div class="card card2">
-                            <div class="card-image"></div>
-                            <div class="card-content">Explore New Horizons</div>
-                        </div>
-                    </div>
-                    
-                    <div class="text-box">
-                        <p>Welcome to a space where your ideas take flight. Whether you're crafting the next big thing or diving into uncharted territories, this platform is designed to inspire, support, and elevate your creative journey.</p>
-                    </div>
-        
-                    <div class="flex">
-                        <div class="card card3">
-                            <div class="card-image"></div>
-                            <div class="card-content">Design with Impact</div>
-                        </div>
-                        <div class="card card4">
-                            <div class="card-image"></div>
-                            <div class="card-content">Collaborate with Passion</div>
-                        </div>
-                        <div class="card card5">
-                            <div class="card-image"></div>
-                            <div class="card-content">Achieve Your Goals</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-                   
-    </section>
-  
-<!--  Example Projects  -->
-<div class="banner" id="services">
-    <div class="tiles-container">
-        <div class="tile" id="web-development" style="background-image: url('/images/web-UI.jpg');" onclick="showInfo('web-development')">
-            Web Development
-        </div>
-        <div class="tile" id="electron-apps" style="background-image: url('/images/app-UI.jpg');" onclick="showInfo('electron-apps')">
-            Desktop Apps
-        </div>
-        <div class="tile" id="blockchain-development" style="background-image: url('/images/sol.jpg');" onclick="showInfo('blockchain-development')">
-            Blockchain Development
-        </div>
-        <div class="tile" id="javascript-games" style="background-image: url('/images/broc_animator.jpg');" onclick="showInfo('javascript-games')">
-            JavaScript Games
-        </div>
-        <div class="tile" id="api-integration" style="background-image: url('/images/programming.jpg');" onclick="showInfo('api-integration')">
-            API Integration
-        </div>
-        <div class="tile" id="smart-contracts" style="background-image: url('/images/sol.jpg');" onclick="showInfo('smart-contracts')">
-            Smart Contracts
-        </div>
-        <div class="tile" id="chatbots" style="background-image: url('/images/bot.png');" onclick="showInfo('chatbots')">
-            Chatbots
-        </div>
-        <!-- Duplicate so it fills screen for scrolling -->
-        <div class="tile" id="web-development" style="background-image: url('/images/web-UI.jpg');" onclick="showInfo('web-development')">
-            Web Development
-        </div>
-        <div class="tile" id="electron-apps" style="background-image: url('/images/app-UI.jpg');" onclick="showInfo('electron-apps')">
-            Desktop Apps
-        </div>
-        <div class="tile" id="blockchain-development" style="background-image: url('/images/sol.jpg');" onclick="showInfo('blockchain-development')">
-            Blockchain Development
-        </div>
-        <div class="tile" id="javascript-games" style="background-image: url('/images/broc_animator.jpg');" onclick="showInfo('javascript-games')">
-            JavaScript Games
-        </div>
-        <div class="tile" id="api-integration" style="background-image: url('/images/programming.jpg');" onclick="showInfo('api-integration')">
-            API Integration
-        </div>
-        <div class="tile" id="smart-contracts" style="background-image: url('/images/sol.jpg');" onclick="showInfo('smart-contracts')">
-            Smart Contracts
-        </div>
-        <div class="tile" id="chatbots" style="background-image: url('/images/bot.png');" onclick="showInfo('chatbots')">
-            Chatbots
-        </div>
-    </div>
-    <div class="details-section">
-        <div id="details-content">
-            <!-- Detailed information will be injected here by JavaScript -->
-        </div>
-    </div>
-</div>
- <!-- Second Hero Section -->
-    <div class="hero secondary-hero">
-
-        <div style="display:flex; padding:25px; z-index: 2;">
-            
-  
-<div id="animation-container">
-    <img id="ufo" src="/images/UFO.png" alt="UFO">
-    <div id="tractor-beam"></div>
-    <img id="cow" src="/images/cow.png" alt="Cow">
-</div>
-
-<div id="code-boxes">
-    <div class="code-box" id="html-box">HTML
-        <pre><code id="html-code"></code></pre>
-    </div>
-    <div class="code-box" id="css-box">CSS
-        <pre><code id="css-code"></code></pre>
-    </div>
-    <div class="code-box" id="js-box">JS
-        <pre><code id="js-code"></code></pre>
-    </div>
-</div>
-
-        </div>
-
-        <div class="content">
-            <h1>Expert Programming for Ambitious Projects</h1>
-            <p>With a deep understanding of JavaScript, Node.js, and modern web technologies, I turn challenging concepts into functional, high-performing solutions. Let’s build something out of this world together!</p>
-        </div>
   </div>
-  
-  <!-- Third Hero Section -->
-    <div class="hero third-hero">
 
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
 
-
-        <div class="content">
-            <h1>Projects</h1>
-            <p>Exploring innovation and creativity through code, design, and collaboration.</p>
-        </div>
-      
-        <div class="logo-container">
-            <div class="logo">
-                <img src="/images/fae_logo.png" alt="Fae_Frameworks" onclick="openPopup('fae')">
-
-            </div>
-            <div class="logo">
-                <img src="/images/eldermine.png" alt="Eldermine" onclick="openPopup('eldermine')">
-
-            </div>
-            <div class="logo">
-                <img src="/images/crouton_jones.png" alt="crouton_jones" onclick="openPopup('crouton')">
-
-            </div>
-            <div class="logo">
-                <img src="/images/merlins_chance.png" alt="Merlins_chance" onclick="openPopup('merlins')">
-
-            </div>
-            <div class="logo">
-                <img src="/images/xnxi.png" alt="xenix_chain" onclick="openPopup('xenix')">
-
-            </div>
-            <div>
-
-            </div>
-            <!-- Add more logos as needed -->
-        </div>
-    
-        <div id="popup" class="popup">
-            <div class="popup-content">
-                <span class="close-btn" onclick="closePopup()">&times;</span>
-                <div style="display: flex; align-items: center; gap: 10px">
-                    <div alt="Logo" id="popup-logo"></div>
-
-                    <h1 id="popup-title">Project Title</h1>
-                </div>
-                <h3>About</h3>
-                <p id="popup-text">Supporting text about the project goes here.</p>
-                <div id="popup-images" class="popup-images">
-                    <!-- Images will be added dynamically -->
-                </div>
-                <h3>What I worked on</h3>
-                <ul id="popup-bullets">
-                    <!-- Bullet points will be added dynamically -->
-                </ul>
-            </div>
-        </div>
-    
-        <div class="fullscreen-container">
-            <img src="" alt="Fullscreen View" id="fullscreen-image">
-          </div>
-  </div>
-  
-   <section id="timeline-section" class="secondary-hero">
-   <h1 style="text-align: center;">Process / Timeline</h1>
-          <p style="text-align: center;">Clear steps to bring your vision to life, from concept to completion.</p>
-     <hr>
-        <div class="timeline">
-            <div class="timeline-line"></div>
-            <div class="timeline-item">
-                <p class="title">Discovery Phase</p>
-                <p class="description">In this initial phase, we explore your project requirements, goals, and objectives to understand what you need and how we can achieve it together.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Project Proposal</p>
-                <p class="description">We present a detailed proposal outlining the scope, timeline, and cost of the project based on our discovery phase discussions.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Agreement & Contract</p>
-                <p class="description">Formalize our partnership with a contract that details the agreed-upon terms, deliverables, and payment schedule.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Research & Planning</p>
-                <p class="description">Conduct in-depth research and create a strategic plan to guide the development process, ensuring all requirements are met.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Wireframing</p>
-                <p class="description">Develop wireframes to map out the structure and layout of the website or app, providing a visual guide for the design phase.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Design Mockups</p>
-                <p class="description">Create detailed design mockups based on the wireframes, showing how the final product will look and function.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Client Review</p>
-                <p class="description">Present the design mockups to you for feedback and revisions, ensuring the design meets your expectations before proceeding.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Development</p>
-                <p class="description">Begin the development phase, coding and building the website or app according to the approved design and functionality.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Content Integration</p>
-                <p class="description">Add and format content into the website or app, including text, images, and multimedia elements.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Testing & QA</p>
-                <p class="description">Conduct thorough testing and quality assurance to identify and fix any issues before launch.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Client Feedback & Revisions</p>
-                <p class="description">Gather your feedback and make any necessary revisions to ensure the final product meets your needs.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Launch Preparation</p>
-                <p class="description">Prepare for the official launch by finalizing all details and ensuring everything is ready for public release.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Project Launch</p>
-                <p class="description">Officially launch the website or app, making it available to users and clients.</p>
-            </div>
-            <div class="timeline-item">
-                <p class="title">Post-Launch Support</p>
-                <p class="description">Provide ongoing support and maintenance to address any post-launch issues and ensure continued success.</p>
-            </div>
-        </div>
-    </section>
-  
-  <section class="hero" id="contact">
-          <div class="content">
-            <h1 style="margin-bottom: 0px; padding-bottom: 0px;">Contact</h1>
-            <div class="social-icons">
-                <a href="https://x.com/boredlegend7" target="_blank" aria-label="X">
-                    <i class="fab fa-x-twitter"></i>
-                </a>
-                <a href="https://www.youtube.com/@Bored_Legend" target="_blank" aria-label="Instagram">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-            <p>Let's discuss your project, ideas, or just say hello.</p>
-        </div>
-        <div id="notification-container"></div>
-
-        <div class="contact-form">
-        <form id="contactForm">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Your Email" required>
-
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-
-            <button type="submit">Send</button>
-        </form>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-bracket">&lt;</span>Legend<span class="logo-bracket">/&gt;</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#timeline" class="nav-link">Process</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <ul>
+      <li><a href="#skills" onclick="closeMobileNav()">Skills</a></li>
+      <li><a href="#services" onclick="closeMobileNav()">Services</a></li>
+      <li><a href="#projects" onclick="closeMobileNav()">Projects</a></li>
+      <li><a href="#timeline" onclick="closeMobileNav()">Process</a></li>
+      <li><a href="#faq" onclick="closeMobileNav()">FAQ</a></li>
+      <li><a href="#contact" onclick="closeMobileNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <img src="./images/legend-mage-hero.png" alt="" class="hero-art" aria-hidden="true">
+    <div class="hero-noise"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for New Projects
+      </div>
+
+      <h1 class="hero-title">
+        <span class="title-line tl-1">Full-Stack</span>
+        <span class="title-line tl-2 gradient-text">Developer &amp;</span>
+        <span class="title-line tl-3">Digital Architect</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Building next-generation web apps, blockchain solutions, and immersive game experiences.
+        From concept to deployment — I craft powerful, scalable systems that make an impact.
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag">JavaScript</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">React</span>
+        <span class="tag">Blockchain</span>
+        <span class="tag">Web3</span>
+        <span class="tag">Game Dev</span>
+        <span class="tag">Solidity</span>
+        <span class="tag">AI / Chatbots</span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">
+          <span>View My Work</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <span>Let's Talk</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num" data-target="7">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Major Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num" data-target="7">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Services Offered</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num" data-target="40">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Characters Animated</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num" data-target="100">0</span><span class="stat-plus">%</span>
+        <span class="stat-label">Commitment</span>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </section>
-</body>
-<script src="script.js"></script>
 
+  <!-- ===== VALUE STRIP ===== -->
+  <section class="value-strip">
+    <div class="container">
+      <div class="value-grid">
+        <div class="value-item reveal">
+          <div class="value-icon"><i class="fas fa-bolt"></i></div>
+          <h4>Fast Delivery</h4>
+          <p>Real milestones, real deadlines. No vague timelines or perpetual delays.</p>
+        </div>
+        <div class="value-item reveal">
+          <div class="value-icon"><i class="fas fa-receipt"></i></div>
+          <h4>Transparent Pricing</h4>
+          <p>You'll know the full cost before I write a single line of code. No surprises.</p>
+        </div>
+        <div class="value-item reveal">
+          <div class="value-icon"><i class="fas fa-layer-group"></i></div>
+          <h4>True Full-Stack</h4>
+          <p>Frontend, backend, blockchain, and deployment — I own the entire stack solo.</p>
+        </div>
+        <div class="value-item reveal">
+          <div class="value-icon"><i class="fas fa-comment-dots"></i></div>
+          <h4>Always Reachable</h4>
+          <p>Regular updates, quick responses, and clear comms throughout every project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">What I Know</span>
+        <h2 class="section-title reveal">Skills &amp; <span class="gradient-text">Technologies</span></h2>
+        <p class="section-subtitle reveal">A full arsenal of modern tools, frameworks, and platforms built for delivering exceptional results.</p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-category reveal">
+          <div class="skill-cat-icon"><i class="fas fa-code"></i></div>
+          <h3>Frontend Development</h3>
+          <div class="skill-pills">
+            <span>JavaScript</span>
+            <span>TypeScript</span>
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>React</span>
+            <span>Canvas API</span>
+            <span>WebGL</span>
+            <span>Responsive Design</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="skill-cat-icon"><i class="fas fa-server"></i></div>
+          <h3>Backend &amp; Databases</h3>
+          <div class="skill-pills">
+            <span>Node.js</span>
+            <span>Express</span>
+            <span>MongoDB</span>
+            <span>REST APIs</span>
+            <span>WebSockets</span>
+            <span>Socket.io</span>
+            <span>JWT Auth</span>
+            <span>Stripe API</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="skill-cat-icon"><i class="fas fa-link"></i></div>
+          <h3>Blockchain &amp; Web3</h3>
+          <div class="skill-pills">
+            <span>Solidity</span>
+            <span>Smart Contracts</span>
+            <span>Web3.js</span>
+            <span>Ethers.js</span>
+            <span>Ethereum</span>
+            <span>Solana</span>
+            <span>DeFi</span>
+            <span>dApps</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="skill-cat-icon"><i class="fas fa-gamepad"></i></div>
+          <h3>Desktop &amp; Game Dev</h3>
+          <div class="skill-pills">
+            <span>Electron.js</span>
+            <span>Game Engines</span>
+            <span>2D Animation</span>
+            <span>AI / Chatbots</span>
+            <span>NLP</span>
+            <span>NPCs</span>
+            <span>Physics Systems</span>
+            <span>Multiplayer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-stack reveal">
+        <div class="tech-icon" title="JavaScript"><i class="fab fa-js"></i></div>
+        <div class="tech-icon" title="Node.js"><i class="fab fa-node-js"></i></div>
+        <div class="tech-icon" title="React"><i class="fab fa-react"></i></div>
+        <div class="tech-icon" title="HTML5"><i class="fab fa-html5"></i></div>
+        <div class="tech-icon" title="CSS3"><i class="fab fa-css3-alt"></i></div>
+        <div class="tech-icon" title="Python"><i class="fab fa-python"></i></div>
+        <div class="tech-icon" title="Git"><i class="fab fa-git-alt"></i></div>
+        <div class="tech-icon" title="GitHub"><i class="fab fa-github"></i></div>
+        <div class="tech-icon" title="Ethereum"><i class="fab fa-ethereum"></i></div>
+        <div class="tech-icon" title="Docker"><i class="fab fa-docker"></i></div>
+        <div class="tech-icon" title="npm"><i class="fab fa-npm"></i></div>
+        <div class="tech-icon" title="Linux"><i class="fab fa-linux"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">What I Do</span>
+        <h2 class="section-title reveal">Services &amp; <span class="gradient-text">Expertise</span></h2>
+        <p class="section-subtitle reveal">End-to-end development solutions tailored to your vision and goals.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-globe"></i></div>
+          <h3>Web Development</h3>
+          <p>Modern, responsive websites and full-stack web applications built for performance, scale, and exceptional user experience.</p>
+          <div class="service-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-desktop"></i></div>
+          <h3>Desktop Applications</h3>
+          <p>Cross-platform desktop apps with Electron — delivering a native-feeling experience across Windows, macOS, and Linux.</p>
+          <div class="service-tags"><span>Electron</span><span>JavaScript</span><span>Node.js</span></div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-cubes"></i></div>
+          <h3>Blockchain &amp; Web3</h3>
+          <p>Smart contracts, dApps, and DeFi platforms built on Ethereum and Solana — secure, transparent, and decentralized.</p>
+          <div class="service-tags"><span>Solidity</span><span>Web3.js</span><span>DeFi</span></div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-gamepad"></i></div>
+          <h3>JavaScript Games</h3>
+          <p>Engaging browser-based games with custom engines, intelligent AI NPCs, blockchain item ownership, and real-time multiplayer.</p>
+          <div class="service-tags"><span>Canvas API</span><span>Game Engines</span><span>AI</span></div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-plug"></i></div>
+          <h3>API Integration</h3>
+          <p>Seamless third-party API connections and custom REST API development — bridging platforms and enabling powerful data flows.</p>
+          <div class="service-tags"><span>REST APIs</span><span>GraphQL</span><span>Webhooks</span></div>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-glow"></div>
+          <div class="service-icon"><i class="fas fa-robot"></i></div>
+          <h3>AI &amp; Chatbots</h3>
+          <p>Intelligent chatbots with custom personalities, NLP integration, and seamless deployment across web and social platforms.</p>
+          <div class="service-tags"><span>OpenAI</span><span>NLP</span><span>Socket.io</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ENGAGEMENT MODELS ===== -->
+  <section id="engagement" class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">How We Work Together</span>
+        <h2 class="section-title reveal">Flexible <span class="gradient-text">Engagement</span></h2>
+        <p class="section-subtitle reveal">Choose the arrangement that fits your project and budget best.</p>
+      </div>
+      <div class="engage-grid">
+        <div class="engage-card reveal">
+          <div class="engage-icon"><i class="fas fa-cube"></i></div>
+          <h3>Fixed Project</h3>
+          <p class="engage-tagline">Best for clearly-scoped builds</p>
+          <ul class="engage-list">
+            <li><i class="fas fa-check"></i> Agreed price upfront</li>
+            <li><i class="fas fa-check"></i> Milestone-based delivery</li>
+            <li><i class="fas fa-check"></i> Defined deliverables</li>
+            <li><i class="fas fa-check"></i> 2 rounds of revisions</li>
+            <li><i class="fas fa-check"></i> 30-day post-launch support</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary">Get a Quote</a>
+        </div>
+        <div class="engage-card engage-featured reveal">
+          <div class="engage-badge">Most Popular</div>
+          <div class="engage-icon"><i class="fas fa-clock"></i></div>
+          <h3>Hourly</h3>
+          <p class="engage-tagline">Best for evolving or unclear scope</p>
+          <ul class="engage-list">
+            <li><i class="fas fa-check"></i> Pay only for time worked</li>
+            <li><i class="fas fa-check"></i> Flexible scope changes</li>
+            <li><i class="fas fa-check"></i> Weekly progress updates</li>
+            <li><i class="fas fa-check"></i> Detailed task logging</li>
+            <li><i class="fas fa-check"></i> Scale up or down any time</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Start Today</a>
+        </div>
+        <div class="engage-card reveal">
+          <div class="engage-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Retainer</h3>
+          <p class="engage-tagline">Best for ongoing partnerships</p>
+          <ul class="engage-list">
+            <li><i class="fas fa-check"></i> Priority response time</li>
+            <li><i class="fas fa-check"></i> Dedicated monthly hours</li>
+            <li><i class="fas fa-check"></i> On-demand feature builds</li>
+            <li><i class="fas fa-check"></i> Bug fixes &amp; maintenance</li>
+            <li><i class="fas fa-check"></i> Monthly strategy call</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">My Portfolio</span>
+        <h2 class="section-title reveal">Featured <span class="gradient-text">Projects</span></h2>
+        <p class="section-subtitle reveal">Real-world solutions that push the boundaries of what's possible.</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card reveal" onclick="openPopup('fae')">
+          <div class="project-img" style="background-image:url('/images/fae/1.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Game Engine</span><span>Social Hub</span><span>AI</span></div>
+            <h3>Fae Frameworks</h3>
+            <p>A complete game engine + social hub ecosystem with AI bots, animation tools, chat, and community features.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('eldermine')">
+          <div class="project-img" style="background-image:url('/images/elder/1.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Blockchain</span><span>Mining</span><span>Crypto</span></div>
+            <h3>Eldermine</h3>
+            <p>A full-featured crypto mining pool site with educational resources, chatbot support, and live price APIs.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('crouton')">
+          <div class="project-img" style="background-image:url('/images/crouton/site1.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Animation</span><span>Blockchain</span><span>Chatbots</span></div>
+            <h3>Crouton Jones</h3>
+            <p>Blockchain-integrated adult animated series with 40+ characters, custom token, and character-specific chatbots.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('deathlane')">
+          <div class="project-img" style="background-image:url('/images/deathlane/death-banner.png')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Racing Game</span><span>Multiplayer</span><span>Track Builder</span></div>
+            <h3>Deathlane</h3>
+            <p>A high-speed multiplayer racing experience with custom lobbies, spectator support, and a built-in track creator.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('cryptowizard')">
+          <div class="project-img" style="background-image:url('/images/cryptowizard/home.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Solana</span><span>Launchpad</span><span>DeFi</span></div>
+            <h3>CryptoWizard</h3>
+            <p>A Solana token launchpad with bonding-curve trading, referral rewards, profit staking, and portfolio tracking.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('croutonverse')">
+          <div class="project-img" style="background-image:url('/images/croutonverse/home.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Solana</span><span>NFT Minting</span><span>Lazy Minting</span></div>
+            <h3>Croutonverse</h3>
+            <p>A Solana NFT minting platform with lazy minting, collection discovery, wallet purchases, and streamlined on-chain ownership.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+
+        <div class="project-card reveal" onclick="openPopup('crispyarcade')">
+          <div class="project-img" style="background-image:url('/images/crispyarcade/home.jpg')"></div>
+          <div class="project-info">
+            <div class="project-tags"><span>Arcade</span><span>Game Economy</span><span>Multiplayer</span></div>
+            <h3>Crispy Arcade</h3>
+            <p>A Croutonverse arcade featuring multiple original and collaborative games, player rewards, virtual currency, profiles, and badges.</p>
+            <span class="project-link">View Project <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TIMELINE ===== -->
+  <section id="timeline" class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">How I Work</span>
+        <h2 class="section-title reveal">My <span class="gradient-text">Process</span></h2>
+        <p class="section-subtitle reveal">A proven workflow that takes your vision from raw idea to polished live product.</p>
+      </div>
+
+      <div class="timeline-grid">
+        <div class="timeline-card reveal">
+          <div class="tl-num">01</div>
+          <div class="tl-icon"><i class="fas fa-search"></i></div>
+          <h3>Discovery</h3>
+          <p>Deep-dive into your project requirements, goals, and vision to map out exactly what needs to be built and why.</p>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tl-num">02</div>
+          <div class="tl-icon"><i class="fas fa-file-alt"></i></div>
+          <h3>Proposal</h3>
+          <p>A detailed proposal with scope, timeline, and cost — clear and transparent from day one, no surprises.</p>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tl-num">03</div>
+          <div class="tl-icon"><i class="fas fa-handshake"></i></div>
+          <h3>Agreement</h3>
+          <p>Formalize the partnership with a contract that locks in deliverables, milestones, and payment schedule.</p>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tl-num">04</div>
+          <div class="tl-icon"><i class="fas fa-pencil-ruler"></i></div>
+          <h3>Design &amp; Plan</h3>
+          <p>Research, wireframes, and design mockups — building the complete blueprint before writing a single line of code.</p>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tl-num">05</div>
+          <div class="tl-icon"><i class="fas fa-code"></i></div>
+          <h3>Development</h3>
+          <p>Full-stack coding, blockchain integration, iterative testing — built for performance, security, and scale.</p>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="tl-num">06</div>
+          <div class="tl-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Launch &amp; Support</h3>
+          <p>QA, launch prep, deployment, and ongoing post-launch support to keep everything running at peak performance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Common Questions</span>
+        <h2 class="section-title reveal">Got <span class="gradient-text">Questions?</span></h2>
+        <p class="section-subtitle reveal">Everything you need to know before reaching out.</p>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">How much does a project cost? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>Every project is different — pricing depends on scope, complexity, and timeline. After a short discovery chat I'll send a clear proposal with a fixed price or hourly estimate. No obligation, no pressure. Just reach out and let's see what fits your budget.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">How long does a project take? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>A landing page or simple site might take 1–2 weeks. A full-stack app or blockchain platform typically runs 4–12 weeks depending on scope. I give realistic timelines upfront and hit every milestone — no going dark mid-project.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">I just have an idea — is that enough to start? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>Absolutely. Most of my best projects started as a rough idea. The discovery phase is specifically designed to shape vague concepts into a concrete buildable plan. Come with your vision — I'll help figure out the rest.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">Do you handle hosting and deployment? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>Yes. I can deploy to VPS, cloud platforms (AWS, DigitalOcean, Vercel, Railway), or self-hosted environments. I'll configure CI/CD, DNS, SSL, and hand off full credentials and documentation so you own everything outright.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">What does revision and post-launch support look like? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>Fixed projects include 2 full revision rounds plus 30 days of post-launch bug-fix support. Retainer clients get ongoing support as part of their arrangement. I'm invested in your project working well long after delivery.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">Will I own all the code and assets? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>100%. Upon final payment you receive full ownership of all source code, assets, and deployed infrastructure. I sign NDAs on request. Your IP is yours — not locked behind any proprietary system of mine.</p></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">Can you work with an existing codebase? <i class="fas fa-plus"></i></button>
+          <div class="faq-a"><p>Yes. Whether it's a legacy codebase that needs modernising, a half-finished project that stalled, or adding new features to a live app — I'm experienced at jumping in and ramping up fast.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title reveal">Connect With Me on <span class="gradient-text">Socials</span></h2>
+        <p class="section-subtitle reveal">Follow my work, keep up with new projects, or send me a message.</p>
+      </div>
+
+      <div class="contact-layout contact-layout-social">
+        <div class="contact-info reveal">
+          <div class="social-avatar-wrap">
+            <div class="social-avatar-glow"></div>
+            <img src="./images/mage_square.jpg" alt="Legend's mage avatar" class="social-avatar">
+          </div>
+          <div class="social-profile-content">
+            <h3>My Social Profiles</h3>
+            <p>Choose a platform below to connect with me.</p>
+            <div class="contact-links">
+              <a href="https://x.com/boredlegend7" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <i class="fab fa-x-twitter"></i>
+                <span>@boredlegend7</span>
+              </a>
+              <!-- YouTube connection temporarily removed.
+              <a href="https://www.youtube.com/@Bored_Legend" target="_blank" rel="noopener noreferrer" class="contact-link">
+                <i class="fab fa-youtube"></i>
+                <span>@Bored_Legend</span>
+              </a>
+              -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky CTA -->
+  <div id="sticky-cta">
+    <div class="sticky-cta-inner">
+      <div class="sticky-left">
+        <span class="badge-dot pulse"></span>
+        <span>Open to new projects</span>
+      </div>
+      <a href="#contact" class="btn btn-primary sticky-btn"><span>Let's Build Together</span><i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <a href="#hero" class="nav-logo">
+          <span class="logo-bracket">&lt;</span>Legend<span class="logo-bracket">/&gt;</span>
+        </a>
+        <p class="footer-tagline">Crafting digital experiences that matter.</p>
+        <p class="footer-copy">&copy; 2026 Legend. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== IMAGE LIGHTBOX ===== -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="event.stopPropagation();closeLightbox()" aria-label="Close image"><i class="fas fa-times"></i></button>
+    <img id="lightbox-img" src="" alt="">
+    <span class="lightbox-hint">Click anywhere to close</span>
+  </div>
+
+  <!-- ===== PROJECT POPUP ===== -->
+  <div id="popup" class="popup">
+    <div class="popup-overlay" onclick="closePopup()"></div>
+    <div class="popup-panel">
+      <div class="popup-header">
+        <div id="popup-logo" class="popup-logo"></div>
+        <h2 id="popup-title"></h2>
+        <button class="popup-close" onclick="closePopup()" aria-label="Close"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="popup-body">
+        <div class="popup-about">
+          <h4>About</h4>
+          <p id="popup-text"></p>
+        </div>
+        <div id="popup-images" class="popup-images"></div>
+        <div class="popup-bullets-section">
+          <h4>What I Built</h4>
+          <ul id="popup-bullets"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CHAT WIDGET ===== -->
+  <!-- Temporarily hidden. Remove the hidden attribute to restore Legend Bot. -->
+  <div id="chatWidget" hidden>
+    <style>
+      .chat-widget{position:fixed;right:20px;bottom:-240px;width:310px;border-radius:12px;z-index:4500;transition:bottom 0.6s cubic-bezier(0.23,1,0.32,1)}
+      .chat-widget.visible{bottom:20px}
+      .chat-header{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;padding:12px 16px;border-radius:12px 12px 0 0;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(124,58,237,0.4)}
+      .chat-header h4{margin:0;font-size:14px;font-family:'Space Grotesk',sans-serif;font-weight:600}
+      .profile-image{width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.4);flex-shrink:0}
+      .profile-image img{width:100%;height:100%;object-fit:cover}
+      .chat-content{display:none;background:#0d1117;border:1px solid rgba(255,255,255,0.07);border-top:none;border-radius:0 0 12px 12px}
+      .chat-content.open{display:block}
+      #chatMessagesContainer{display:flex;flex-direction:column;max-height:55vh;overflow-y:auto;padding:12px}
+      #chatMessagesContainer::-webkit-scrollbar{width:4px}
+      #chatMessagesContainer::-webkit-scrollbar-thumb{background:#7c3aed;border-radius:2px}
+      .chat-messages{display:contents}
+      .message{display:flex;max-width:85%;margin:4px 0}
+      .message.sent{align-self:flex-end}
+      .message.received{align-self:flex-start}
+      .message-content{padding:8px 12px;border-radius:12px;font-size:13px;font-family:'Space Grotesk',sans-serif;line-height:1.5}
+      .message.sent .message-content{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:white}
+      .message.received .message-content{background:rgba(255,255,255,0.07);color:#e2e8f0;border:1px solid rgba(255,255,255,0.08)}
+      .warning-text{color:#64748b;font-size:11px;text-align:center;padding:8px;font-family:'Space Grotesk',sans-serif}
+      .chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(255,255,255,0.07)}
+      .chat-input input{flex:1;padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#f1f5f9;font-size:13px;font-family:'Space Grotesk',sans-serif;outline:none}
+      .chat-input input:focus{border-color:#7c3aed}
+      .chat-input button{padding:9px 14px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;font-family:'Space Grotesk',sans-serif;transition:opacity 0.2s}
+      .chat-input button:hover{opacity:0.85}
+    </style>
+
+    <div class="chat-widget">
+      <div class="chat-header" id="chat-header">
+        <div class="profile-image">
+          <img id="profile-image" src="./images/mage_square.jpg" alt="Profile">
+        </div>
+        <div>
+          <h4>Legend Bot</h4>
+          <div style="font-size:11px;opacity:0.8">Ask me anything</div>
+        </div>
+        <i class="fas fa-chevron-up" style="margin-left:auto;font-size:12px;transition:transform 0.3s"></i>
+      </div>
+      <div class="chat-content">
+        <div id="chatMessagesContainer">
+          <div id="chatMessages" class="chat-messages"></div>
+        </div>
+        <div class="chat-input">
+          <input type="text" id="messageInput" placeholder="Type a message...">
+          <button id="sendMessageBtn">Send</button>
+        </div>
+      </div>
+    </div>
+    <script src="./widget.js"></script>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
